@@ -43,9 +43,10 @@ class Uzer
      */
     private static function groupBlok(&$user, $expectedType)
     {
-        if (self::types[$expectedType] && self::types[$user->usertype]) {
-            return self::types[$user->usertype] <= self::types[$expectedType];
+        if (self::$types[$expectedType] && self::$types[$user->usertype]) {
+            if (self::$types[$user->usertype] > self::$types[$expectedType]) {
+                JError::raiseError(404, 'Sorry!  Users of type: ' . $user->usertype . ' are denied access. <a href="#" onclick="window.history.go(-1); return false;">GO BACK</a>');
+            }
         }
-        return false;
     }
 }
