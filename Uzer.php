@@ -23,15 +23,29 @@ class Uzer
     );
 
     /**
-     * Compare (by rank) expected and actual usertypes
+     * blocking interface
      *
      * @param object $user
      * @param string $expectedType
      *
      * @return boolean (expression)
      */
-    public static function blok($user, $expectedType)
+    public static function blok(&$user, $expectedType)
     {
-        return self::types[$user->usertype] <= self::types[$expectedType];
+        return grouopBlok($user, $expectedType);
+    }
+
+    /**
+     * Block based on expected usertype
+     *
+     * @param $user
+     * @param $expectedType
+     */
+    private static function groupBlok(&$user, $expectedType)
+    {
+        if (self::types[$expectedType] && self::types[$user->usertype]) {
+            return self::types[$user->usertype] <= self::types[$expectedType];
+        }
+        return false;
     }
 }
